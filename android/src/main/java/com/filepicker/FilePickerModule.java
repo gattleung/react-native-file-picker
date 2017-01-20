@@ -100,20 +100,21 @@ public class FilePickerModule extends ReactContextBaseJavaModule implements Acti
         }
     }
 
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         // user cancel
-        if (resultCode != Activity.RESULT_OK) {
-            response.putBoolean("didCancel", true);
-            mCallback.invoke(response);
-            return;
-        }
-
-        Activity currentActivity = getCurrentActivity();
-
-        Uri uri;
-
         if (requestCode == REQUEST_LAUNCH_FILE_CHOOSER) {
+			if (resultCode != Activity.RESULT_OK) {
+				response.putBoolean("didCancel", true);
+				mCallback.invoke(response);
+				return;
+			}
+
+			Activity currentActivity = getCurrentActivity();
+
+			Uri uri;
+
             uri = data.getData();
             response.putString("uri", data.getData().toString());
             String path = null;
@@ -123,6 +124,7 @@ public class FilePickerModule extends ReactContextBaseJavaModule implements Acti
             }
             mCallback.invoke(response);
         }
+		super.onActivityResult(requestCode, resultCode, data);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
