@@ -124,7 +124,6 @@ public class FilePickerModule extends ReactContextBaseJavaModule implements Acti
             }
             mCallback.invoke(response);
         }
-		super.onActivityResult(requestCode, resultCode, data);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
